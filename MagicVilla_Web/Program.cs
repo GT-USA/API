@@ -7,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//AutoMapper Injection
+// AutoMapper Injection
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
-//Register Http Client to Villa Service
+// Register Http Client to Villa Service
 builder.Services.AddHttpClient<IVillaService, VillaService>();
 //Register VillaService (dependency injection)
 //Scoped is using same object for a lifetime
