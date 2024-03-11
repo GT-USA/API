@@ -33,7 +33,6 @@ jobs:
         for element in "${PathDirs[@]}"; do
             find "$element" -type f
         done
-    submodules: true
   - task: AzureStaticWebApp@0
     inputs:
       azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_POND_018C01010)
