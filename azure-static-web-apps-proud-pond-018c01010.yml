@@ -1,7 +1,5 @@
 name: Azure Static Web Apps CI/CD
-variables:
-  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
-  isDev: $[eq(variables['Build.SourceBranch'], 'refs/heads/dev')]
+
 pr:
   branches:
     include:
@@ -10,15 +8,28 @@ trigger:
   branches:
     include:
       - master
-      - dev
-      - staging
 
 jobs:
-- job: build_and_deploy_job_prod
+- job: build_and_deploy_job
   displayName: Build and Deploy Job
   condition: or(eq(variables['Build.Reason'], 'Manual'),or(eq(variables['Build.Reason'], 'PullRequest'),eq(variables['Build.Reason'], 'IndividualCI')))
   pool:
-    vmImage: ubuntu-latest
+    vmImage: {ubuntu-latest}
+    steps:
+- checkout: none
+- bash: |
+    SEARCH_PATH=$PATH  # or any colon-delimited list of paths
+    IFS=':' read -r -a PathDirs <<< "$SEARCH_PATH"
+    echo "##[debug] Found directories"
+    for element in "${PathDirs[@]}"; do
+        echo "$element"
+    done;
+    echo;
+    echo;  
+    echo "##[debug] Found files"
+    for element in "${PathDirs[@]}"; do
+        find "$element" -type f
+    done
   variables:
   - group: Azure-Static-Web-Apps-proud-pond-018c01010-variable-group
   steps:
@@ -33,16 +44,4 @@ jobs:
       api_location: "" # Api source code path - optional
       output_location: "" # Built app content directory - optional
 ###### End of Repository/Build Configurations ######
-- job: build_and_deploy_job_dev
-  displayName: Build and Deploy Job Dev
-  condition: and( eq(variables.isDev, true), or(eq(variables['Build.Reason'], 'Manual'),or(eq(variables['Build.Reason'], 'PullRequest'),eq(variables['Build.Reason'], 'IndividualCI'))))
-  pool:
-    vmImage: ubuntu-latest
-  variables:
-  - group: Azure-Static-Web-Apps-proud-pond-018c01010-variable-group
-  steps:
-  - checkout: self
-    submodules: true
-  - task: AzureStaticWebApp@0
-    inputs:
-      azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_POND_018C01010)
+
