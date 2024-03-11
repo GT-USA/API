@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MagicVilla_Web.Models.DTO.VillaDTO>
+<br/>
+<div class="container p-4 border">
+    <div class=" row pb-2 align-items-center">
+        <div class="col">
+            <h1 class="btn-primary">Villa List</h1>
+        </div>
+        <div class="col text-end pt-1 d-flex justify-content-lg-end">
+            <a asp-controller="Villa" asp-action="CreateVilla" class="btn btn-outline-dark"><i class="bi bi-plus-square-fill"></i> Create New Villa</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr class="table-dark">
+                <th>
+                    Name
+                </th>
+                <th class="text-center">
+                    Occupants
+                </th>
+                <th>
+                    Price
+                </th>
+                <th class="text-center">
+                    Admin Panel
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var i in Model)
+            {
+                <tr class="table-active">
+                    <td class="align-middle text-primary-emphasis"><strong>@i.Name</strong></td>
+                    <td class="align-middle text-primary-emphasis text-center"><strong>@i.Occupants</strong></td>
+                    <td class="align-middle text-primary-emphasis"><strong>@((i.Rate).ToString("c"))</strong></td>
+                    <td class="text-center">
+                        <a asp-controller="Villa" asp-action="UpdateVilla" asp-route-villaId="@i.Id" class="btn btn-outline-success btn-sm"><i class="bi bi-pencil-square"></i>Update</a>
+                        <a asp-controller="Villa" asp-action="DeleteVilla" asp-route-villaId="@i.Id" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash-fill"></i>Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
