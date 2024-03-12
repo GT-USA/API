@@ -148,6 +148,46 @@ namespace MagicVilla_Web.Controllers
             }
             return View(vmUpdate);
         }
-        //AZURE DEPLOYMENT TEST
+        //AZURE DEPLOYMENT TEST===========================
+
+        public async Task<IActionResult> DeleteVillaNumber (int villaNo)
+        {
+            //to populate dropdown, call villa services API
+            VillaNumberDeleteViewModel villaNumberVM = new();
+            var response = await _villaNumberService.GetAsync<APIResponse>(villaNo);
+            if (response != null && response.IsSuccess)
+            {
+                //retrive villaDTO with deserialization
+                VillaNumberDTO updateModel = JsonConvert.DeserializeObject<VillaNumberDTO>(Convert.ToString(response.Result));
+                //return updated values with villa dto update through mapper
+                villaNumberVM.VillaNumber = updateModel;
+            }
+
+            response = await _villaService.GetAllAsync<APIResponse>();
+            if (response != null && response.IsSuccess)
+            {
+                villaNumberVM.VillaList = JsonConvert.DeserializeObject<List<VillaDTO>>
+                    (Convert.ToString(response.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    });
+                return View(villaNumberVM);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteVillaNumber(VillaNumberDeleteViewModel vm)
+        {
+            var response = await _villaNumberService.DeleteAsync<APIResponse>(vm.VillaNumber.VillaNo); 
+            if (response != null && response.IsSuccess) 
+            {
+                return RedirectToAction(nameof(IndexVillaNumber));
+            }
+            return View(vm);    
+        }
     }
 }
