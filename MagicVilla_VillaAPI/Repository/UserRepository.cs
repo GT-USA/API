@@ -7,9 +7,13 @@ namespace MagicVilla_VillaAPI.Repository
     public class UserRepository :IUserRepository
     {
         private readonly AppDBContext _db;
-        public UserRepository(AppDBContext db)
+        //to access the secret when we generate token
+        private string secretKey;
+        public UserRepository(AppDBContext db, IConfiguration configuration)
         {
             _db = db;
+            //to access the secret when we generate token
+            secretKey = configuration.GetValue<string>("ApiSettings:Secret");
         }
 
         public bool IsUniqueUser(string username)
@@ -25,6 +29,17 @@ namespace MagicVilla_VillaAPI.Repository
 
         public Task<LoginDTOResponse> Login(LoginDTORequest loginDTORequest)
         {
+            //to access the secret when we generate token 
+            //for login request, get password and username from DB
+            var user = _db.LocalUser.FirstOrDefault(u=>u.UserName.ToLower()==loginDTORequest.UserName.ToLower()
+            && u.Password == loginDTORequest.Password);
+            if (user == null) 
+            {
+                return null;
+            }
+
+            //if user was found generate JWT token
+
             throw new NotImplementedException();
         }
 
