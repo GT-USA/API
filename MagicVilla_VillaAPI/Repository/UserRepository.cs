@@ -12,9 +12,15 @@ namespace MagicVilla_VillaAPI.Repository
             _db = db;
         }
 
-        public bool isUniqueUser(string username)
+        public bool IsUniqueUser(string username)
         {
-            throw new NotImplementedException();
+            //retrieve user from DB based on user
+            var user = _db.LocalUser.FirstOrDefault(x=>x.UserName == username);
+            if (user == null) 
+            {
+                return true;
+            }
+            return false;
         }
 
         public Task<LoginDTOResponse> Login(LoginDTORequest loginDTORequest)
@@ -22,9 +28,26 @@ namespace MagicVilla_VillaAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<LocalUser> Register(RegisterationDTORequest registerationDTORequest)
+        public async Task<LocalUser> Register(RegisterationDTORequest registerationDTORequest)
         {
-            throw new NotImplementedException();
+            //Add new user in Local DB and populate user based on RegistrationDTORequest
+            LocalUser user = new()
+            {
+                UserName = registerationDTORequest.UserName,
+                Password = registerationDTORequest.Password,
+                Name = registerationDTORequest.Name,
+                Role = registerationDTORequest.Role,
+            };
+
+            //Add database
+            _db.LocalUser.Add(user);
+            //Save changes
+            await _db.SaveChangesAsync();
+
+            //before return empty the password
+            user.Password = "";
+            //return user object
+            return user;
         }
     }
 }
