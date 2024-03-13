@@ -17,8 +17,8 @@ builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 //Registration of VillaNumberRepository
 builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
 //Connection String
-//builder.Services.AddDbContext<AppDBContext>
-//    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
+builder.Services.AddDbContext<AppDBContext>
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 builder.Services.AddDbContext<AppDBContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureConnectionString")));
 
