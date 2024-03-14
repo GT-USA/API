@@ -1,6 +1,10 @@
 ﻿using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Models.DTO;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace MagicVilla_VillaAPI.Repository
 {
@@ -27,7 +31,7 @@ namespace MagicVilla_VillaAPI.Repository
             return false;
         }
 
-        public Task<LoginDTOResponse> Login(LoginDTORequest loginDTORequest)
+        public async Task<LoginDTOResponse> Login(LoginDTORequest loginDTORequest)
         {
             //to access the secret when we generate token 
             //for login request, get password and username from DB
@@ -39,8 +43,42 @@ namespace MagicVilla_VillaAPI.Repository
             }
 
             //if user was found generate JWT token
+            //JWT token handler
+            var tokenHandler = new JwtSecurityTokenHandler();
+            
+            //Access secret key, encode and get it
+            //We will convert secret key as byte array
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
-            throw new NotImplementedException();
+            //Token descriptor: Defines what the token claim.
+            //Claim identify like name of the user, role, ID, row etc..
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                //Claim identity that pass multiple claims
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                   //From LocalUser
+                   new Claim(ClaimTypes.Name,user.Id.ToString()),
+                   new Claim(ClaimTypes.Role,user.Role)
+                }),
+
+                //Define token for how long it will be valid for
+                Expires = DateTime.UtcNow.AddDays(7),
+                //Credentials
+                SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            //Token generate
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            //Return type of the token is LoginDTOResponse
+            LoginDTOResponse loginResponseDTO = new LoginDTOResponse()
+            {
+                Token = tokenHandler.WriteToken(token),
+                User = user
+            };
+
+            return loginResponseDTO;
         }
 
         public async Task<LocalUser> Register(RegisterationDTORequest registerationDTORequest)
