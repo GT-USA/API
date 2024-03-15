@@ -28,7 +28,7 @@ namespace MagicVilla_Web.Services
             });
         }
 
-        public Task<T> RegisterAsync<T>(LocalUserDTO localUserDTO)
+        public Task<T> RegisterAsync<T>(RegisterDTORequest localUserDTO)
         {
             return SendAsync<T>(new APIRequest()
             {
