@@ -3,7 +3,10 @@ using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Logging;
 using MagicVilla_VillaAPI.Repository;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +26,28 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 //    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 builder.Services.AddDbContext<AppDBContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureConnectionString")));
+
+//Retrieve key in appsettings.json for config
+var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
+
+//Authentication configuration
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(x => {  //Configure option for Auth
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+});
 
 builder.Services.AddControllers(options =>
 { //options.ReturnHttpNotAcceptable = true;//If API format is not Json, return error
