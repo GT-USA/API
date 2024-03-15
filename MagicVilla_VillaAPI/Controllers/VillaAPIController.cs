@@ -38,6 +38,8 @@ namespace MagicVilla_VillaAPI.Controllers
         //HttpGet 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)] //EndPont Status Documentation
         public async Task<ActionResult<APIResponse>> GetVillas()
         {
             try
@@ -62,6 +64,8 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status404NotFound)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)] //EndPont Status Documentation
         //SINGLE VILLA OBJECT 
         public async Task<ActionResult<APIResponse>> GetVilla(int id)
         {
@@ -102,6 +106,8 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status404NotFound)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)] //EndPont Status Documentation
         public async Task<ActionResult<APIResponse>> CreateVilla([FromBody] VillaDTOCreate createDTO)
         {
             try
@@ -139,6 +145,8 @@ namespace MagicVilla_VillaAPI.Controllers
         [Authorize(Roles = "CUSTOM")]
         [HttpDelete("{id:int}", Name = "DeleteVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPont Status Documentation
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status404NotFound)] //EndPont Status Documentation
         // IActionResilt is not require return type!!!
