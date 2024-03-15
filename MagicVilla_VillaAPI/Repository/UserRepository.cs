@@ -1,6 +1,7 @@
 ﻿using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Models.DTO;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -35,11 +36,16 @@ namespace MagicVilla_VillaAPI.Repository
         {
             //to access the secret when we generate token 
             //for login request, get password and username from DB
+            
             var user = _db.LocalUser.FirstOrDefault(u=>u.UserName.ToLower()==loginDTORequest.UserName.ToLower()
             && u.Password == loginDTORequest.Password);
             if (user == null) 
             {
-                return null;
+                return new LoginDTOResponse()
+                {
+                    Token = "",
+                    User = null,
+                };
             }
 
             //if user was found generate JWT token

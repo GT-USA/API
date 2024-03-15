@@ -16,9 +16,11 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 //Registration of VillaNumberRepository
 builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
+//Registration of UserRepository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 //Connection String
-builder.Services.AddDbContext<AppDBContext>
-    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
+//builder.Services.AddDbContext<AppDBContext>
+//    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 builder.Services.AddDbContext<AppDBContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureConnectionString")));
 

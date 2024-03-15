@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_VillaAPI.Data
 {
-    public class AppDBContext : DbContext
+    public class AppDBContext:DbContext
     {
         public AppDBContext(DbContextOptions<AppDBContext> options)
             : base(options)
@@ -78,7 +78,6 @@ namespace MagicVilla_VillaAPI.Data
                   Amenity = "",
                   CreatedDate = DateTime.Now
               });
-
         }
     }
 }

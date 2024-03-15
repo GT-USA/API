@@ -5,13 +5,9 @@
       "connectionId": "ConnectionStrings:AzureConnectionString",
       "dynamicId": null
     },
-    "secrets1": {
-      "type": "secrets"
-    },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:AzuerConnectionString",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:AzureConnection"
     }
   }
 }

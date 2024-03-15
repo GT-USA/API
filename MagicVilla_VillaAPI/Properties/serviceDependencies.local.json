@@ -1,15 +1,11 @@
 {
   "dependencies": {
-    "secrets1": {
-      "type": "secrets.user"
-    },
     "mssql1": {
-      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/eastus/connectors/ConnectionStringsAzuerConnectionString_1318B0A10E",
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/eastus/connectors/ConnectionStringsAzureConnection_3C99BE3CB3",
       "secretStore": "LocalSecretsFile",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/villadb/databases/Magic_VillaAPI_2024-03-10T08-49Z",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/villadb/databases/Magic_VillaAPI",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:AzuerConnectionString",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:AzureConnection"
     }
   }
 }
