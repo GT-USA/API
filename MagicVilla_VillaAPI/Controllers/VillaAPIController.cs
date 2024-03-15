@@ -4,6 +4,7 @@ using MagicVilla_VillaAPI.Logging;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.DTO;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
         //ENDPOINTS
 
+        [Authorize]
         //HttpGet 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -55,6 +57,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         //HttpGet ENDPOINT
+        [Authorize(Roles = "admin")]
         [HttpGet("{id:int}", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
@@ -94,6 +97,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         //Creating Resource (new Villa)
+        [Authorize(Roles ="admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
@@ -132,6 +136,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         //Delete Resource (existing Villa)
+        [Authorize(Roles = "CUSTOM")]
         [HttpDelete("{id:int}", Name = "DeleteVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
