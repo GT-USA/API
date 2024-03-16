@@ -36,6 +36,9 @@ builder.Services.AddSession(option =>
     option.Cookie.IsEssential = true;
 });
 
+//Register HttpContextAccessor Service
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
