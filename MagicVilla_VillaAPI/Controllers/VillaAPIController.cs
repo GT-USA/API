@@ -176,6 +176,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
 
         //Update Resource (existing Villa) => all properties!
+        [Authorize(Roles = "admin")]
         [HttpPut("{id:int}", Name = "UpdateVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
@@ -203,7 +204,7 @@ namespace MagicVilla_VillaAPI.Controllers
             }
             return _response;
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPont Status Documentation
