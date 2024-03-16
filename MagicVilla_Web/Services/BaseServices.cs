@@ -57,7 +57,7 @@ namespace MagicVilla_Web.Services
                 //Response by default
                 HttpResponseMessage apiResponse = null;
 
-                // call API end Point to response API message
+                //call API end Point to response API message
                 //Logs can create in here
                 //CHECK ERRORS
                 apiResponse = await client.SendAsync(message);

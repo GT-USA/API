@@ -142,7 +142,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         //Delete Resource (existing Villa)
-        [Authorize(Roles = "CUSTOM")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id:int}", Name = "DeleteVilla")]
         [ProducesResponseType(StatusCodes.Status204NoContent)] //EndPont Status Documentation
         [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPont Status Documentation
