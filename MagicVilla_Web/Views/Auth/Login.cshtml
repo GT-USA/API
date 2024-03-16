@@ -1,0 +1,41 @@
+﻿@model MagicVilla_WEB.Models.DTO.LoginDTORequest
+</br>
+
+<form method="post">
+    <div class="container border p-3 mx-auto">
+        <div class="row text-center">
+            <h1>Login</h1>
+        </div>
+        <div class="row">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+
+        <div class="col-6 p-2 mx-auto">
+            <label asp-for="@Model.UserName" class="control-label pt-2" style="font-size:20px;"></label>
+        </div>
+        <div class="col-6 p-1 mx-auto">
+            <input class="form-control" asp-for="UserName" type="text" placeholder="Username" />
+        </div>
+
+        <div class="col-6 p-2 mx-auto">
+            <label asp-for="@Model.Password" class="control-label pt-2" style="font-size:20px;"></label>
+        </div>
+        <div class="col-6 p-1 mx-auto">
+            <input class="form-control" asp-for="Password" type="text" placeholder="Password" />
+        </div>
+        <div class="row">
+            <div class="col-3 p-2 mx-auto me-0">
+                <button type="submit" class="btn btn-outline-primary btn-success" value="Submit">Login</button>
+            </div>
+            <div class="col-3 p-2 mx-auto ms-0 text-center">
+                <a asp-action="Index" asp-controller="Home" class="btn-primary btn form-control">Home</a>
+            </div>  
+        </div>
+
+    </div>
+    
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
