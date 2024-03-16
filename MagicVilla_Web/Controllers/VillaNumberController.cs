@@ -4,6 +4,7 @@ using MagicVilla_Web.Models.DTO;
 using MagicVilla_Web.Models.ViewModel;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -36,6 +37,7 @@ namespace MagicVilla_Web.Controllers
             return View(list);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateVillaNumber()
         {
             //to populate dropdown, call villa services API
@@ -53,6 +55,7 @@ namespace MagicVilla_Web.Controllers
             return View(villaNumberVM);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateVillaNumber(VillaNumberCreateViewModel model)
@@ -87,6 +90,7 @@ namespace MagicVilla_Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateVillaNumber(int villaNo)
         {
             //to populate dropdown, call villa services API
@@ -115,6 +119,7 @@ namespace MagicVilla_Web.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateVillaNumber(VillaNumberUpdateViewModel vmUpdate)
@@ -150,6 +155,7 @@ namespace MagicVilla_Web.Controllers
         }
         //AZURE DEPLOYMENT TEST===========================
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVillaNumber (int villaNo)
         {
             //to populate dropdown, call villa services API
@@ -178,6 +184,7 @@ namespace MagicVilla_Web.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteVillaNumber(VillaNumberDeleteViewModel vm)
